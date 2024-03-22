@@ -4,26 +4,226 @@
 <head>
     <title>Chat App</title>
     <link rel="icon" href="/img/favicon.png">
-    <link rel="stylesheet" href="/css/styles.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+
+    <title>Messenger - 2.2.0</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/img/favicon/favicon.ico" type="image/x-icon">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700" rel="stylesheet">
+
+    <!-- Template CSS -->
+    <link class="css-lt" rel="stylesheet" href="/css/template.bundle.css" media="(prefers-color-scheme: light)">
+    <link class="css-dk" rel="stylesheet" href="/css/template.dark.bundle.css" media="(prefers-color-scheme: dark)">
+
+    <!-- Theme mode -->
+    <script>
+        if (localStorage.getItem('color-scheme')) {
+            let scheme = localStorage.getItem('color-scheme');
+
+            const LTCSS = document.querySelectorAll('link[class=css-lt]');
+            const DKCSS = document.querySelectorAll('link[class=css-dk]');
+
+            [...LTCSS].forEach((link) => {
+                link.media = (scheme === 'light') ? 'all' : 'not all';
+            });
+
+            [...DKCSS].forEach((link) => {
+                link.media = (scheme === 'dark') ? 'all' : 'not all';
+            });
+        }
+    </script>
+    <style>
+        .chat-body {
+            /* Asegúrate de que el contenedor tenga una altura máxima */
+            max-height: 100%;
+            /* o el valor deseado */
+            /* Establece overflow-y como scroll o auto */
+            overflow-y: auto;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="chat">
-        <div id="sidebar" class="chat__sidebar">
 
-        </div>
-        <div class="chat__main">
-            <div id="messages" class="chat__messages"></div>
+    <div class="layout overflow-hidden">
+        <!-- Navigation -->
 
-            <div class="compose">
-                <form id="message-form">
-                    <input name="message" placeholder="Message" required autocomplete="off">
-                    <button>Send</button>
-                </form>
-                <button id="send-location">Send location</button>
+        <!-- Sidebar -->
+        <aside class="sidebar bg-light">
+            <div class="tab-content h-100" role="tablist">
+
+                <!-- Chats -->
+                <div class="tab-pane fade h-100 show active" id="tab-content-chats" role="tabpanel">
+                    <div class="d-flex flex-column h-100 position-relative">
+                        <div class="hide-scrollbar">
+
+                            <div class="container py-8">
+                                <!-- Title -->
+                                <div class="mb-8">
+                                    <h2 class="fw-bold m-0">Usuarios</h2>
+                                </div>
+
+                                <!-- Chats -->
+                                <div id="sidebar" class="card-list">
+
+
+                                </div>
+                                <!-- Chats -->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </aside>
+        <!-- Sidebar -->
+
+        <!-- Chat -->
+        <main class="main is-visible" data-dropzone-area="">
+            <div class="container h-100">
+
+                <div class="d-flex flex-column h-100 position-relative">
+                    <!-- Chat: Header -->
+                    <div class="chat-header border-bottom py-4 py-lg-7">
+                        <div class="row align-items-center">
+
+                            <!-- Mobile: close -->
+                            <div class="col-2 d-xl-none">
+                                <!-- <a class="icon icon-lg text-muted" href="#" data-toggle-chat="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-left">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </a> -->
+                            </div>
+                            <!-- Mobile: close -->
+
+                            <!-- Content -->
+                            <div class="col-8 col-xl-12">
+                                <div class="row align-items-center text-center text-xl-start">
+                                    <!-- Title -->
+                                    <div class="col-12 col-xl-6">
+                                        <div class="row align-items-center gx-5">
+
+                                            <div class="col overflow-hidden">
+                                                <h5 id="roomName" class="text-truncate"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Title -->
+                                </div>
+                            </div>
+                            <!-- Content -->
+
+                            <!-- Mobile: more -->
+                            <!-- <div class="col-2 d-xl-none text-end">
+                                <a href="#" class="icon icon-lg text-muted" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvas-more" aria-controls="offcanvas-more">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-more-vertical">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="12" cy="5" r="1"></circle>
+                                        <circle cx="12" cy="19" r="1"></circle>
+                                    </svg>
+                                </a>
+                            </div> -->
+                            <!-- Mobile: more -->
+
+                        </div>
+                    </div>
+                    <!-- Chat: Header -->
+
+                    <!-- Chat: Content -->
+                    <div class="chat-body hide-scrollbar flex-1 h-100">
+                        <div class="chat-body-inner">
+                            <div id="messages" class="py-6 py-lg-12">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Chat: Content -->
+
+                    <!-- Chat: Footer -->
+                    <div class="chat-footer pb-3 pb-lg-7 position-absolute bottom-0 start-0">
+                        <!-- Chat: Files -->
+                        <div class="dz-preview bg-dark" id="dz-preview-row" data-horizontal-scroll="">
+                        </div>
+                        <!-- Chat: Files -->
+
+                        <!-- Chat: Form -->
+                        <form id="message-form" class="chat-form rounded-pill bg-dark" data-emoji-form="">
+                            <div class="row align-items-center gx-0">
+                                <div class="col-auto">
+                                    <a id="send-location" href="#"
+                                        class="btn btn-icon btn-link text-body rounded-circle">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-map-pin">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input name="message" class="form-control px-0"
+                                            placeholder="Type your message..." rows="1" data-emoji-input=""
+                                            data-autosize="true" autocomplete="off"></input>
+
+                                        <a href="#" class="input-group-text text-body pe-0" data-emoji-btn="">
+                                            <span class="icon icon-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-smile">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                                </svg>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-icon btn-primary rounded-circle ms-5">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-send">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Chat: Form -->
+                    </div>
+                    <!-- Chat: Footer -->
+                </div>
+
+            </div>
+        </main>
+        <!-- Chat -->
     </div>
+    <!-- Layout -->
+    <!-- Scripts -->
+    <script src="/js/vendor.js"></script>
+    <script src="/js/template.js"></script>
+
+
 
     <script id="message-template" type="text/html">
             <div class="message">
